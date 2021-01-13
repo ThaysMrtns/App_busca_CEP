@@ -1,6 +1,9 @@
 
+import 'dart:convert' as convert;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 
 void main(){
   runApp(MaterialApp(
@@ -14,7 +17,7 @@ class App extends StatefulWidget {
   _AppState createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,11 +39,26 @@ class _AppState extends State<App> {
             child: 
               Column(
                 children: [
-                  Text("Buscar CEP")
+                  Text("Buscar CEP"),
+                  RaisedButton(onPressed: (){
+                    req();
+                  })
                 ],
               ),
         ),
       )
     );
+    
+  }
+  void req() async{
+    var url = "https://viacep.com.br/ws/01001000/json/";
+    var response = await http.get(url);
+    if(response.statusCode == 200){
+      var jsonResponse = convert.jsonDecode(response.body);
+      print("CEP: $jsonResponse");
+    } else {
+      print("Request failed with status: ${response.statusCode}.");
+    }
   }
 }
+
