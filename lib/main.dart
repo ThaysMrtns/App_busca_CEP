@@ -54,6 +54,13 @@ class _AppState extends State<App>{
     );
     
   }
+  void muda(data){
+         //Mudando o estado dos variaveis
+    setState(() {
+      cep = data;
+    });
+  }
+  
   void req() async{
     var url = "https://viacep.com.br/ws/01001000/json/";
     var response = await http.get(url); 
@@ -64,14 +71,15 @@ class _AppState extends State<App>{
       var jsonResponse = convert.jsonDecode(response.body);
       
       // Com os dados já tratados podemos acessa-los corretamente
-      cep = jsonResponse["cep"];
+      var data = jsonResponse["cep"];
       var logradouro = jsonResponse["logradouro"];
       var complemento = jsonResponse["complemento"];
       var bairro = jsonResponse["bairro"];
       var localidade = jsonResponse["localidade"];
       var uf = jsonResponse["uf"];
-      print("Dados: $cep, $logradouro, $complemento, $bairro, $localidade, $uf");
-      return cep;
+      print("Dados: $data, $logradouro, $complemento, $bairro, $localidade, $uf");
+
+      muda(data);
     } else {
       print("Request failed with status: ${response.statusCode}.");
     }
