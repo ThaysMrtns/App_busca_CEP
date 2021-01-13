@@ -18,7 +18,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App>{
-  var cep="";
+  var cep = "";
+  var complemento = "";
+  var logradouro = "";
+  var bairro = ""; 
+  var localidade = "";
+  var uf ="";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +50,12 @@ class _AppState extends State<App>{
                   RaisedButton(onPressed: (){
                     req();
                   }),
-                  Text(
-                    "CEP: $cep"
-                  )
+                  Text("CEP: $cep"),
+                  Text("Logradouro: $logradouro"),
+                  Text("Complemento: $complemento"),
+                  Text("Bairro: $bairro"),
+                  Text("Localidade: $localidade"),
+                  Text("Uf: $uf")
                 ],
               ),
         ),
@@ -54,10 +63,15 @@ class _AppState extends State<App>{
     );
     
   }
-  void muda(data){
+  void muda(cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade, cepUf){
          //Mudando o estado dos variaveis
     setState(() {
-      cep = data;
+      cep = cepCep;
+      logradouro = cepLogradouro;
+      complemento = cepComplemento;
+      bairro = cepBairro;
+      localidade = cepLocalidade;
+      uf = cepUf;
     });
   }
   
@@ -71,15 +85,15 @@ class _AppState extends State<App>{
       var jsonResponse = convert.jsonDecode(response.body);
       
       // Com os dados já tratados podemos acessa-los corretamente
-      var data = jsonResponse["cep"];
-      var logradouro = jsonResponse["logradouro"];
-      var complemento = jsonResponse["complemento"];
-      var bairro = jsonResponse["bairro"];
-      var localidade = jsonResponse["localidade"];
-      var uf = jsonResponse["uf"];
-      print("Dados: $data, $logradouro, $complemento, $bairro, $localidade, $uf");
+      var cepCep = jsonResponse["cep"];
+      var cepLogradouro = jsonResponse["logradouro"];
+      var cepComplemento = jsonResponse["complemento"];
+      var cepBairro = jsonResponse["bairro"];
+      var cepLocalidade = jsonResponse["localidade"];
+      var cepUf = jsonResponse["uf"];
+      print("Dados: $cepCep, $cepLogradouro, $cepComplemento, $cepBairro, $cepLocalidade, $cepUf");
 
-      muda(data);
+      muda(cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade, cepUf);
     } else {
       print("Request failed with status: ${response.statusCode}.");
     }
