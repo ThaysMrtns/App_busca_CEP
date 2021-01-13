@@ -18,6 +18,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App>{
+  var cep="";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +43,10 @@ class _AppState extends State<App>{
                   Text("Buscar CEP"),
                   RaisedButton(onPressed: (){
                     req();
-                  })
+                  }),
+                  Text(
+                    "CEP: $cep"
+                  )
                 ],
               ),
         ),
@@ -52,10 +56,22 @@ class _AppState extends State<App>{
   }
   void req() async{
     var url = "https://viacep.com.br/ws/01001000/json/";
-    var response = await http.get(url);
+    var response = await http.get(url); 
     if(response.statusCode == 200){
+      /*
+        Os dados devem ser convertidos para json afim de poderem ser acessados
+      */
       var jsonResponse = convert.jsonDecode(response.body);
-      print("CEP: $jsonResponse");
+      
+      // Com os dados já tratados podemos acessa-los corretamente
+      cep = jsonResponse["cep"];
+      var logradouro = jsonResponse["logradouro"];
+      var complemento = jsonResponse["complemento"];
+      var bairro = jsonResponse["bairro"];
+      var localidade = jsonResponse["localidade"];
+      var uf = jsonResponse["uf"];
+      print("Dados: $cep, $logradouro, $complemento, $bairro, $localidade, $uf");
+      return cep;
     } else {
       print("Request failed with status: ${response.statusCode}.");
     }
