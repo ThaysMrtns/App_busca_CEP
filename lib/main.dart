@@ -1,11 +1,10 @@
-
 import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
-void main(){
+void main() {
   runApp(MaterialApp(
     home: App(),
     debugShowCheckedModeBanner: false,
@@ -17,54 +16,71 @@ class App extends StatefulWidget {
   _AppState createState() => _AppState();
 }
 
-class _AppState extends State<App>{
+class _AppState extends State<App> {
   var cep = "";
   var complemento = "";
   var logradouro = "";
-  var bairro = ""; 
+  var bairro = "";
   var localidade = "";
-  var uf ="";
+  var uf = "";
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Busca CEP",
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black
+        appBar: AppBar(
+          title: const Text(
+            "Busca CEP",
+            style: TextStyle(fontSize: 20, color: Colors.black),
           ),
+          backgroundColor: Colors.white,
         ),
-        backgroundColor: Colors.white,
-      ),
-      body: 
-      Padding(
-        padding: EdgeInsets.all(20),
-        child:
-          Center(
-            child: 
-              Column(
-                children: [
-                  Text("Buscar CEP"),
-                  RaisedButton(onPressed: (){
-                    req();
-                  }),
-                  Text("CEP: $cep"),
-                  Text("Logradouro: $logradouro"),
-                  Text("Complemento: $complemento"),
-                  Text("Bairro: $bairro"),
-                  Text("Localidade: $localidade"),
-                  Text("Uf: $uf")
-                ],
-              ),
-        ),
-      )
-    );
-    
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Center(
+            child: Column(
+              children: [
+                Text("Buscar CEP"),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Informe o valor';
+                          }
+                        },
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              print(value);
+                            }
+                          },
+                          child: null)
+                    ],
+                  ),
+                ),
+                RaisedButton(onPressed: () {
+                  req();
+                }),
+                Text("CEP: $cep"),
+                Text("Logradouro: $logradouro"),
+                Text("Complemento: $complemento"),
+                Text("Bairro: $bairro"),
+                Text("Localidade: $localidade"),
+                Text("Uf: $uf")
+              ],
+            ),
+          ),
+        ));
   }
-  void muda(cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade, cepUf){
-         //Mudando o estado dos variaveis
+
+  void muda(
+      cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade, cepUf) {
+    //Mudando o estado dos variaveis
     setState(() {
       cep = cepCep;
       logradouro = cepLogradouro;
@@ -74,16 +90,16 @@ class _AppState extends State<App>{
       uf = cepUf;
     });
   }
-  
-  void req() async{
+
+  void req() async {
     var url = "https://viacep.com.br/ws/01001000/json/";
-    var response = await http.get(url); 
-    if(response.statusCode == 200){
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
       /*
         Os dados devem ser convertidos para json afim de poderem ser acessados
       */
       var jsonResponse = convert.jsonDecode(response.body);
-      
+
       // Com os dados já tratados podemos acessa-los corretamente
       var cepCep = jsonResponse["cep"];
       var cepLogradouro = jsonResponse["logradouro"];
@@ -91,12 +107,13 @@ class _AppState extends State<App>{
       var cepBairro = jsonResponse["bairro"];
       var cepLocalidade = jsonResponse["localidade"];
       var cepUf = jsonResponse["uf"];
-      print("Dados: $cepCep, $cepLogradouro, $cepComplemento, $cepBairro, $cepLocalidade, $cepUf");
+      print(
+          "Dados: $cepCep, $cepLogradouro, $cepComplemento, $cepBairro, $cepLocalidade, $cepUf");
 
-      muda(cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade, cepUf);
+      muda(cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade,
+          cepUf);
     } else {
       print("Request failed with status: ${response.statusCode}.");
     }
   }
 }
-
