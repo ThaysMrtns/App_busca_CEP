@@ -31,9 +31,6 @@ class _AppState extends State<App> {
             child: Column(
               children: [
                 Formulario(),
-                /*RaisedButton(onPressed: () {
-                  req(cepUser);
-                }),*/
               ],
             ),
           ),

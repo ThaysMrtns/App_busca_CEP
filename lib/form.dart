@@ -22,18 +22,18 @@ class _FormularioState extends State<Formulario> {
   Widget build(BuildContext context) {
     return Column(children: [
       Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(top: 20),
         child: TextField(
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
               labelText: "Digite o CEP", labelStyle: TextStyle(fontSize: 24)),
           enabled: true, //Habilita e desabilita o campo de texto
-          /*maxLength: 8,
-          maxLengthEnforced: true,*/
           style: TextStyle(color: Colors.black),
           onSubmitted: (String cep) {
             print("cep: $cep");
           },
+          maxLength: 8,
+          maxLengthEnforced: false,
           // O controller tem acesso ao que foi digitado no campo de texto
           controller: _textEditingController,
         ),
@@ -46,12 +46,19 @@ class _FormularioState extends State<Formulario> {
           req(_textEditingController.text);
         },
       ),
-      Text("CEP: $cep"),
-      Text("Logradouro: $logradouro"),
-      Text("Complemento: $complemento"),
-      Text("Bairro: $bairro"),
-      Text("Localidade: $localidade"),
-      Text("Uf: $uf")
+      Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("CEP: $cep", style: TextStyle(fontSize: 18)),
+              Text("Logradouro: $logradouro", style: TextStyle(fontSize: 18)),
+              Text("Complemento: $complemento", style: TextStyle(fontSize: 18)),
+              Text("Bairro: $bairro", style: TextStyle(fontSize: 18)),
+              Text("Localidade: $localidade", style: TextStyle(fontSize: 18)),
+              Text("Uf: $uf", style: TextStyle(fontSize: 18))
+            ],
+          ))
     ]);
   }
 
@@ -84,8 +91,7 @@ class _FormularioState extends State<Formulario> {
       var cepBairro = jsonResponse["bairro"];
       var cepLocalidade = jsonResponse["localidade"];
       var cepUf = jsonResponse["uf"];
-      print(
-          "Dados: $cepCep, $cepLogradouro, $cepComplemento, $cepBairro, $cepLocalidade, $cepUf");
+      /*print("Dados: $cepCep, $cepLogradouro, $cepComplemento, $cepBairro, $cepLocalidade, $cepUf");*/
 
       muda(cepCep, cepLogradouro, cepComplemento, cepBairro, cepLocalidade,
           cepUf);
