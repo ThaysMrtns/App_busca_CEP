@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:buscaCep/form.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -24,7 +25,7 @@ class _AppState extends State<App> {
   var localidade = "";
   var uf = "";
 
-  final _formKey = GlobalKey<FormState>();
+  //final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _AppState extends State<App> {
         appBar: AppBar(
           title: const Text(
             "Busca CEP",
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            style: TextStyle(fontSize: 20, color: Colors.blue),
           ),
           backgroundColor: Colors.white,
         ),
@@ -41,28 +42,7 @@ class _AppState extends State<App> {
           child: Center(
             child: Column(
               children: [
-                Text("Buscar CEP"),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Informe o valor';
-                          }
-                        },
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              print(value);
-                            }
-                          },
-                          child: null)
-                    ],
-                  ),
-                ),
+                Formulario(),
                 RaisedButton(onPressed: () {
                   req();
                 }),
