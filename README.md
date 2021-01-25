@@ -13,10 +13,10 @@ gratuito para consultar ceps em todo o Brasil. Caso queira saber mais sobre ViaC
 
 > Convert: https://api.flutter.dev/flutter/dart-convert/dart-convert-library.html
 
-.
 # Como abrir o projeto na sua máquina?
 Use o comando a seguir para instalar as dependências caso seja necessário
 > flutter pub get
 
 Recomendo abrir o projeto com o editor de código Vscode. Aperte f5 para rodar o projeto em um emulador ou celular
 > f5
+
