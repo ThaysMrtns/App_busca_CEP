@@ -47,16 +47,25 @@ class _FormularioState extends State<Formulario> {
         },
       ),
       Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(top:50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("CEP: $cep", style: TextStyle(fontSize: 18)),
-              Text("Logradouro: $logradouro", style: TextStyle(fontSize: 18)),
-              Text("Complemento: $complemento", style: TextStyle(fontSize: 18)),
-              Text("Bairro: $bairro", style: TextStyle(fontSize: 18)),
-              Text("Localidade: $localidade", style: TextStyle(fontSize: 18)),
-              Text("Uf: $uf", style: TextStyle(fontSize: 18))
+              Card(
+                child: Column(children: [
+                  Padding(
+                    padding: EdgeInsets.only(top:50, bottom: 50, left: 10, right: 10),
+                    child: Column(children: [
+                      Text("CEP: $cep", style: TextStyle(fontSize: 18),),
+                      Text("Logradouro: $logradouro", style: TextStyle(fontSize: 18)),
+                      Text("Complemento: $complemento", style: TextStyle(fontSize: 18)),
+                      Text("Bairro: $bairro", style: TextStyle(fontSize: 18)),
+                      Text("Localidade: $localidade", style: TextStyle(fontSize: 18)),
+                      Text("Uf: $uf", style: TextStyle(fontSize: 18))
+                    ]),
+                  ),
+                ])
+              ),
             ],
           ))
     ]);
